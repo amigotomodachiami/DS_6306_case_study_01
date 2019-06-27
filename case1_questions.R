@@ -249,14 +249,14 @@ IBU_by_style
 top_n(ABV_by_style, n=99, Mean) %>%
   ggplot(., aes(x=reorder(Style_cat,-Mean),y=Mean,fill=Style_cat)) + 
   geom_bar(stat="identity") + 
-  labs(title="Top 10 ABV Average by Style",subtitle="",x="Style",y="Average",caption="") +
+  labs(title="ABV Average by Style",subtitle="",x="Style",y="Average",caption="") +
   theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
 
 #Top 10 IBU Style (Mean)
 top_n(IBU_by_style, n=99, Mean) %>%
   ggplot(., aes(x=reorder(Style_cat,-Mean),y=Mean,fill=Style_cat)) + 
   geom_bar(stat="identity") + 
-  labs(title="Top 10 IBU Average by Style",subtitle="",x="Style",y="Average",caption="") +
+  labs(title="IBU Average by Style",subtitle="",x="Style",y="Average",caption="") +
   theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
 
 
