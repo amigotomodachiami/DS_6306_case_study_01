@@ -328,6 +328,7 @@ top_n(IBU_by_style, n=99, Mean) %>%
 ```{r pie}
 #install.packages("ggforce")
 library(dplyr)
+library(plotly)
 style1 <- beer_df$style
 
 popular.styles <- table(unlist(beer_df$Style))
@@ -355,12 +356,8 @@ p2 <- plot_ly(pstyles.trim, labels = pstyles.trim$Style, values = plabel.trim$pe
   layout(title = 'Style Distribution',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-```
-big high level conclusion animated slide at the end, conclusion, 
-thank you for the opportunity to present, deeper questions can be reached at email/contact informations.
-slide design good
-keep to talking points on the left, let visuals speak for themselves
-polish and practice, 5 times walkthrough, then video till it has no flaws 
-plot a median line on charts where it is a relevent talking point
+p2
 
-analysis factors, add percentage of missing data beers
+```
+
+Jonathan Tan Presentation Link https://youtu.be/lEkBnPQ2dcg 

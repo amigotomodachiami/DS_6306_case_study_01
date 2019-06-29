@@ -1,0 +1,61 @@
+slide 1
+Hi, my name is jonathan tan. Thank you for the opportunity to present to you today. 
+the following is an analysis of the beer and brewery data provided to our team. 
+
+slide 2
+The first item of business is the distribution of breweries per state; colorado and california have the highest in the nation
+followed by a few other midwestern states
+
+slide 3
+15% of the breweries represented by the data reside in california and colorado alone.
+
+slide 4 
+The district of colombia produces the beers with the highest median alcohol content at 6.5%. The national median is 5.6%
+
+slide 5
+Nevada's breweries produce the highest average alcohol content at 6.7%. The national average alcohol content is only 5.9%. 
+
+slide 6
+Beers produced in maine have an median bitterness rating of 61 IBU, well above the national average of 35 IBU. 
+
+slide 7
+West virginia produces beers with the highest average bitterness rating at 58 IBU. The data ranges from bitternes
+ratings of 4 to 138.
+
+slide 8
+Regarding style distribution, IPA style beers have a significant plurality; about one fifth of all beers represented in the 
+data were identified as IPA
+
+slide 9
+This next chart shows the distribution of beer styles based on bitterness and alcoholic content
+(click for blueblox)
+almost all the brands in the data had less than 10% ABV and 100 IBU, 96.2%
+(click for redbox)
+more than half had 50 IBU or less and 3-6% ABV
+
+slide 10
+As a style, dark ales had the highest average alcoholic content, around 7.1% ABV compared to the national average of 5.9
+
+slide 11
+IPA beers on average were significantly more bitter than every other style, further research could investigate 
+if this high IBU is related to the proliferation of the style. 
+
+slide 12
+regarding the data provided, 
+62 beer brands did not report abv
+1005 beer brands did not report IBU
+these brands were excluded from the analysis. 
+
+slide 13
+in conclusion 
+(click animation) 
+the high concentration of breweries in colorado and california fits with the corporate presence of major industry 
+players like coors and of course anheuser-busch (AN-hizer bush)
+(click animation)
+IPA style beers have a significant plurality of represented styles
+(click animation) 
+and more than half of all reported beers are low IBU and between 3-6% alcohol content. 
+
+This concludes our team's analysis.
+Further questions can be directed to myself or team members through email or github. 
+thank you for the opportunity to present to you today. 
