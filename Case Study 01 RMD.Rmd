@@ -65,8 +65,11 @@ stateFromLower <-function(x) {
 #beer_path="/Users/wailunchung/Documents/GitHub/MSDS-6306-Doing-Data-Science/Unit 7/Beers.csv"
 #brewery_path="/Users/wailunchung/Documents/GitHub/MSDS-6306-Doing-Data-Science/Unit 7/Breweries.csv"
 #added some redirects for my machine, switch comments back when you run it on yours jtan
-beer_path="D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01/Raw Data/Beers.csv"
-brewery_path="D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01/Raw Data/Breweries.csv"
+#beer_path="D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01/Raw Data/Beers.csv"
+#brewery_path="D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01/Raw Data/Breweries.csv"
+beer_path<-file.path(getwd(), "Raw Data", "Beers.csv")
+brewery_path<-file.path(getwd(), "Raw Data", "Breweries.csv")
+
 beer_df=read.csv(beer_path)
 brewery_df=read.csv(brewery_path)
 
@@ -327,7 +330,26 @@ top_n(IBU_by_style, n=99, Mean) %>%
 ##extra2 style pie chart
 ```{r pie}
 #install.packages("ggforce")
+
 library(dplyr)
+library(ggforce)
+library(plotly)
+
+# cleaner code by Joe
+count_by_style_cat <- data.frame(table(beer_brew_df$Style_cat))
+names(count_by_style_cat)<-c("Style_cat","Freq")
+percent_by_style_cat <- data.frame(count_by_style_cat$Style_cat, count_by_style_cat$Freq/sum(count_by_style_cat$Freq)*100)
+names(percent_by_style_cat) <- c("Style", "percent")
+percent_by_style_cat
+
+p <- plot_ly(percent_by_style_cat, labels = ~Style, values = ~percent, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
+  layout(title = 'Style Distribution',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
+
+####################
+# 
 style1 <- beer_df$style
 
 popular.styles <- table(unlist(beer_df$Style))
@@ -355,6 +377,17 @@ p2 <- plot_ly(pstyles.trim, labels = pstyles.trim$Style, values = plabel.trim$pe
   layout(title = 'Style Distribution',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+count_by_style_cat <- data.frame(table(beer_brew_df$Style_cat))
+names(count_by_style_cat)<-c("Style_cat","Freq")
+percent_by_style_cat <- data.frame(count_by_style_cat$Style_cat, count_by_style_cat$Freq/sum(count_by_style_cat$Freq)*100)
+names(percent_by_style_cat) <- c("Style", "percent")
+percent_by_style_cat
+
+p <- plot_ly(percent_by_style_cat, labels = ~Style, values = ~percent, type = 'pie',textposition = 'inside',textinfo = 'label+percent') %>%
+  layout(title = 'Style Distribution',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
 ```
 big high level conclusion animated slide at the end, conclusion, 
 thank you for the opportunity to present, deeper questions can be reached at email/contact informations.

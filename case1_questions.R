@@ -232,6 +232,9 @@ beer_df$Style_cat <- ifelse(grepl(paste(pil_key,collapse="|"), ignore.case=TRUE,
 lager_key<-c(' lager')
 beer_df$Style_cat <- ifelse(grepl(paste(lager_key,collapse="|"), ignore.case=TRUE, beer_df$Style), "Lager", beer_df$Style_cat)
 
+beer_df[beer_df$Style_cat=='Unknown',]
+beer_df
+
 beer_brew_df<-merge(x=beer_df,y=brewery_df,by.x="Brewery_id",by.y="Brew_ID",all.x = TRUE)
 ABV_by_style <- beer_brew_df %>%
   group_by(Style_cat)%>% 
@@ -259,5 +262,18 @@ top_n(IBU_by_style, n=99, Mean) %>%
   labs(title="IBU Average by Style",subtitle="",x="Style",y="Average",caption="") +
   theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
 
+p<-ggplot(beer_brew_df, aes(x=ABV, y=IBU,color=Style_cat)) + 
+  geom_point()+
+  geom_smooth(method=lm,linetype="dashed",
+              color="darkred", fill="blue")
+p <- p +  labs(color='Style') 
+p <- p + theme(legend.position="bottom")
+p <- p + guides(fill=guide_legend(nrow=2, byrow=TRUE))
+p
+#+ labs(color='NEW LEGEND TITLE') 
 
-
+getwd()
+file.path(getwd(), "Raw Data", "lib")
+paste(getwd(),"/Raw Data")
+file.path(getwd(), "Raw Data", "Beers.csv")
+install.packages("ggforce")
