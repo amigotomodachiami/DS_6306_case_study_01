@@ -356,6 +356,8 @@ p2 <- plot_ly(pstyles.trim, labels = pstyles.trim$Style, values = plabel.trim$pe
   layout(title = 'Style Distribution',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p2
+
 ```
 
 Jonathan Tan Presentation Link https://youtu.be/lEkBnPQ2dcg 
