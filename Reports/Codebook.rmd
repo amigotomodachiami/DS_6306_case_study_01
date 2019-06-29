@@ -1,0 +1,34 @@
+---
+title: "Case Study 01 Codebook"
+author: "Jonathan Tan"
+date: "6/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#DS 6306
+## Case Study 01 Codebook
+###Joe Chung and Jonathan Tan
+
+Libraries used - 
+#library(ggplot2)
+#library(plotly)
+#library(dplyr)
+#library(maps)
+#library(ggthemes)
+
+
+beer_df - dataframe, 2410 instances of 8 variables - initial raw import data
+
+brewery_df, 1405 instances of 11 5 variables - inital raw import data
+
+beer_brewery_df, 2410 instances of 12 variables - merged beer and brewery data
+
+cmerge, 1405 instances of 11 variables - merged data with NA's removed
+
+Calculations for IBU and ABV median and average used subdivisions of beer_brewery_df
+
+ABV_by_Style and IBU_by_Style were used for scatterplot 1
+
