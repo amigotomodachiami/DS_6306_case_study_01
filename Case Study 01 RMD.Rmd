@@ -7,10 +7,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#setwd("D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01")
 ```
 ```{r package installations, include = FALSE}
 #install.packages("maps")
+#install.packages('ggthemes')
 #library(ggplot2)
 #library(plotly)
 #library(dplyr)
@@ -62,11 +62,7 @@ stateFromLower <-function(x) {
 
 #1.   How many breweries are present in each state?
 ```{r q1}
-#beer_path="/Users/wailunchung/Documents/GitHub/MSDS-6306-Doing-Data-Science/Unit 7/Beers.csv"
-#brewery_path="/Users/wailunchung/Documents/GitHub/MSDS-6306-Doing-Data-Science/Unit 7/Breweries.csv"
-#added some redirects for my machine, switch comments back when you run it on yours jtan
-#beer_path="D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01/Raw Data/Beers.csv"
-#brewery_path="D:/SMU/DS 6306 Doing Data Science/DS_6306_case_study_01/DS_6306_case_study_01/Raw Data/Breweries.csv"
+
 beer_path<-file.path(getwd(), "Raw Data", "Beers.csv")
 brewery_path<-file.path(getwd(), "Raw Data", "Breweries.csv")
 
@@ -81,31 +77,21 @@ brewery_df$State <- trim(brewery_df$State)
 brewery_df$State_full<-stateFromLower(brewery_df$State)
 count_by_state <- data.frame(table(brewery_df$State_full))
 
-#ggplot(count_by_state, aes(x=reorder(Var1,-Freq),y=Freq,fill=Var1)) + 
-#  geom_bar(stat="identity") + 
-#  labs(title="Brewery Count by State",subtitle="",x="State",y="freq",caption="") +
-#  theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = #1),legend.position="none")
 
-#install.packages("maps")
 # using maps to get coordinate and use ggplot to plot maps
-#install.packages('ggthemes')
+
 library(maps)
 library(ggplot2)
 library(ggthemes)
 us_states <- map_data("state")
 head(us_states,10)
 beer_brew_df<-merge(x=beer_df,y=brewery_df,by.x="Brewery_id",by.y="Brew_ID",all.x = TRUE)
-#beer_brew_df_map<-merge(x=brewery_df,y=us_states,by.x="State_full",by.y="region",all.x = TRUE)
-beer_brew_df_map<-merge(x=count_by_state,y=us_states,by.x="Var1",by.y="region",all.x = TRUE)
-#count_by_state
-#names(beer_brew_df_map)
 
-#beer_brew_df_map
+beer_brew_df_map<-merge(x=count_by_state,y=us_states,by.x="Var1",by.y="region",all.x = TRUE)
 
 p <- ggplot(data = beer_brew_df_map,
             aes(x = long, y = lat,
                 group = group, fill = Freq))
-#p + geom_polygon(color = "gray90", size = 0.1) + guides(fill = FALSE)
 p + geom_polygon(color = "gray90", size = 0.1) +
   coord_map(projection = "albers", lat0 = 39, lat1 = 45) + 
   labs(title = "Brewery Distribution") +
@@ -142,11 +128,6 @@ There are 62 beers with no reported ABV, and 1005 beers with no reported IBU
 #4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
 
 ```{r q4}
-#library(dplyr)
-#beer_brew_df %>%
-#  group_by(State)%>% 
-#  summarise(Mean=mean(ABV,na.rm=TRUE), Max=max(ABV,na.rm=TRUE), Min=min(ABV,na.rm=TRUE), Median=median(ABV,na.rm=TRUE), Std=sd(ABV,na.rm=TRUE))
-
 library(dplyr)
 median_IBU_by_state <- beer_brew_df %>%
   group_by(State_full)%>% 
@@ -193,8 +174,6 @@ top_n(IBU_by_state, n=10, Mean) %>%
   labs(title="Top 10 IBU Average by State",subtitle="",x="State",y="Average",caption="") +
   theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
 
-
-
 #--------
 
 summary(beer_brew_df)
@@ -216,8 +195,6 @@ top_n(median_IBU_by_state, n=10, Median) %>%
   labs(title="Top 10 IBU Median by State",subtitle="",x="State",y="Median",caption="") +
   theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
 ```
-The highest national ABV is (name of beer),(some percent%) alcohol by volume, produced in (state)
-The highest national IBU is (name of beer),(some rating) bitterness rating, produced in (state)
 
 #6. Summary statistics for the ABV variable.
 ```{r q6}
@@ -323,77 +300,21 @@ top_n(IBU_by_style, n=99, Mean) %>%
   labs(title="Top 10 IBU Average by Style",subtitle="",x="Style",y="Average",caption="") +
   theme(plot.title=element_text(hjust=0.5),axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
 
-
-
 ```
 
 ##extra2 style pie chart
 ```{r pie}
-#install.packages("ggforce")
-
-library(dplyr)
-library(ggforce)
 library(plotly)
 
-# cleaner code by Joe
 count_by_style_cat <- data.frame(table(beer_brew_df$Style_cat))
 names(count_by_style_cat)<-c("Style_cat","Freq")
 percent_by_style_cat <- data.frame(count_by_style_cat$Style_cat, count_by_style_cat$Freq/sum(count_by_style_cat$Freq)*100)
 names(percent_by_style_cat) <- c("Style", "percent")
-percent_by_style_cat
 
 p <- plot_ly(percent_by_style_cat, labels = ~Style, values = ~percent, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
   layout(title = 'Style Distribution',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 p
-
-####################
-# 
-style1 <- beer_df$style
-
-popular.styles <- table(unlist(beer_df$Style))
-#want to get this in order, descending
-#maybe dataframe can sort and keep label
-pop.df <- as.data.frame(popular.styles)
-names(pop.df) <- c("Style", "Count")
-popular.styles <- pop.df[order(pop.df$Count, decreasing = TRUE),]
-#ok got it
-pstyles <- popular.styles
-
-#calculate percentage of reported data per style
-plabel <- data.frame(pstyles$Style, pstyles$Count/sum(pstyles$Count)*100)
-names(plabel) <- c("Style", "percent")
-
-p <- plot_ly(pstyles, labels = pstyles$Style, values = plabel$percent, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
-  layout(title = 'Style Distribution',
-         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-#too many one instance styles, trim?
-
-pstyles.trim <- pstyles[1:30,]
-plabel.trim <- plabel[1:30, ]
-p2 <- plot_ly(pstyles.trim, labels = pstyles.trim$Style, values = plabel.trim$percent, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
-  layout(title = 'Style Distribution',
-         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-count_by_style_cat <- data.frame(table(beer_brew_df$Style_cat))
-names(count_by_style_cat)<-c("Style_cat","Freq")
-percent_by_style_cat <- data.frame(count_by_style_cat$Style_cat, count_by_style_cat$Freq/sum(count_by_style_cat$Freq)*100)
-names(percent_by_style_cat) <- c("Style", "percent")
-percent_by_style_cat
-
-p <- plot_ly(percent_by_style_cat, labels = ~Style, values = ~percent, type = 'pie',textposition = 'inside',textinfo = 'label+percent') %>%
-  layout(title = 'Style Distribution',
-         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-
 ```
-big high level conclusion animated slide at the end, conclusion, 
-thank you for the opportunity to present, deeper questions can be reached at email/contact informations.
-slide design good
-keep to talking points on the left, let visuals speak for themselves
-polish and practice, 5 times walkthrough, then video till it has no flaws 
-plot a median line on charts where it is a relevent talking point
 
-analysis factors, add percentage of missing data beers
